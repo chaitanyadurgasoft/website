@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to AWS Training</title>
+    <!-- Add some CSS to change client UI -->
+    <style>
+        body {
+            background-image: url("cloud.jpg");
+        }
+
+
+        img {
+            height: 250px;
+            width: 400px;
+        }
+
+        .container {
+            height: 800px;
+            position: relative;
+            border: 3px solid green;
+        }
+
+        .center {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+
+        label,
+        button {
+            color: #1b38c6;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20px;
+            margin-left: 40px;
+        }
+
+        .button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        input {
+            color: #232F3E;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20px;
+            margin-left: 20px;
+        }
+    </style>
+    <script>
+        // define the callAPI function that takes a first name and last name as parameters
+        var callAPI = (firstName, lastName) => {
+            // instantiate a headers object
+            var myHeaders = new Headers();
+            // add content type header to object
+            myHeaders.append("Content-Type", "application/json");
+            // using built in JSON utility package turn object to string and store in a variable
+            var raw = JSON.stringify({ "firstName": firstName, "lastName": lastName });
+            // create a JSON object with parameters for API call and store in a variable
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+            // make API call with parameters and use promises to get response
+            fetch(" https://7i2xsc9v76.execute-api.us-east-2.amazonaws.com/dev", requestOptions)
+                .then(response => response.text())
+                .then(result => alert(JSON.parse(result).body))
+                .catch(error => console.log('error', error));
+        }
+    </script>
+</head>
+
+<body>
+    <form>
+        <div class="container">
+            <marquee behavior="alternate" direction="left" scrollamount="15">
+                <img src="aws.png" width="120" height="80" alt="Natural" />
+            </marquee>
+            <div class="center">
+                <div class="col-xs-12 col-sm-12 col-md-8">
+
+                    <h1 style="color:rgb(214, 29, 29);font-size:60px;">Welcome to Cloud Training by CGIT</h1>
+                    <div>
+                        <label>First Name :</label>
+                        <input type="text" id="fName">
+                    </div>
+                    </br>
+                    <div>
+                        <label>Last Name :</label>
+                        <input type="text" id="lName">
+                    </div>
+                    </br>
+                    <!-- set button onClick method to call function we defined passing input values as parameters -->
+                    <button type="button" class="button"
+                        onclick="callAPI(document.getElementById('fName').value,document.getElementById('lName').value)">Submit</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+
+</html>
